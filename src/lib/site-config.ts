@@ -1,0 +1,12 @@
+// Central public site configuration. Replace before deployment.
+export const SITE = {
+  name: "Freelance CRM",
+  shortName: "FreelanceCRM",
+  description:
+    "Offline-first CRM for freelancers to organize clients, proposals, interviews, and invoices — data stays in your browser.",
+  url: "https://freelance-crm.example.com",
+  ogImage: "/og-image.svg",
+  owner: "Freelance CRM",
+  privacyEmail: "privacy@example.com",
+  themeColor: "#4f46e5",
+};
