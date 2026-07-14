@@ -9,38 +9,265 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProposalsIndexRouteImport } from './routes/proposals.index'
+import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
+import { Route as InterviewsIndexRouteImport } from './routes/interviews.index'
+import { Route as ClientsIndexRouteImport } from './routes/clients.index'
+import { Route as ProposalsIdRouteImport } from './routes/proposals.$id'
+import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
+import { Route as InterviewsIdRouteImport } from './routes/interviews.$id'
+import { Route as ClientsIdRouteImport } from './routes/clients.$id'
+import { Route as InvoicesIdIndexRouteImport } from './routes/invoices.$id.index'
+import { Route as InvoicesIdPrintRouteImport } from './routes/invoices.$id.print'
+import { Route as InvoicesIdEditRouteImport } from './routes/invoices.$id.edit'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProposalsIndexRoute = ProposalsIndexRouteImport.update({
+  id: '/proposals/',
+  path: '/proposals/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
+  id: '/invoices/',
+  path: '/invoices/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewsIndexRoute = InterviewsIndexRouteImport.update({
+  id: '/interviews/',
+  path: '/interviews/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientsIndexRoute = ClientsIndexRouteImport.update({
+  id: '/clients/',
+  path: '/clients/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProposalsIdRoute = ProposalsIdRouteImport.update({
+  id: '/proposals/$id',
+  path: '/proposals/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesNewRoute = InvoicesNewRouteImport.update({
+  id: '/invoices/new',
+  path: '/invoices/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewsIdRoute = InterviewsIdRouteImport.update({
+  id: '/interviews/$id',
+  path: '/interviews/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientsIdRoute = ClientsIdRouteImport.update({
+  id: '/clients/$id',
+  path: '/clients/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesIdIndexRoute = InvoicesIdIndexRouteImport.update({
+  id: '/invoices/$id/',
+  path: '/invoices/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesIdPrintRoute = InvoicesIdPrintRouteImport.update({
+  id: '/invoices/$id/print',
+  path: '/invoices/$id/print',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvoicesIdEditRoute = InvoicesIdEditRouteImport.update({
+  id: '/invoices/$id/edit',
+  path: '/invoices/$id/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/privacy': typeof PrivacyRoute
+  '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/clients/$id': typeof ClientsIdRoute
+  '/interviews/$id': typeof InterviewsIdRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/proposals/$id': typeof ProposalsIdRoute
+  '/clients/': typeof ClientsIndexRoute
+  '/interviews/': typeof InterviewsIndexRoute
+  '/invoices/': typeof InvoicesIndexRoute
+  '/proposals/': typeof ProposalsIndexRoute
+  '/invoices/$id/edit': typeof InvoicesIdEditRoute
+  '/invoices/$id/print': typeof InvoicesIdPrintRoute
+  '/invoices/$id/': typeof InvoicesIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/privacy': typeof PrivacyRoute
+  '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/clients/$id': typeof ClientsIdRoute
+  '/interviews/$id': typeof InterviewsIdRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/proposals/$id': typeof ProposalsIdRoute
+  '/clients': typeof ClientsIndexRoute
+  '/interviews': typeof InterviewsIndexRoute
+  '/invoices': typeof InvoicesIndexRoute
+  '/proposals': typeof ProposalsIndexRoute
+  '/invoices/$id/edit': typeof InvoicesIdEditRoute
+  '/invoices/$id/print': typeof InvoicesIdPrintRoute
+  '/invoices/$id': typeof InvoicesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/privacy': typeof PrivacyRoute
+  '/settings': typeof SettingsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/clients/$id': typeof ClientsIdRoute
+  '/interviews/$id': typeof InterviewsIdRoute
+  '/invoices/new': typeof InvoicesNewRoute
+  '/proposals/$id': typeof ProposalsIdRoute
+  '/clients/': typeof ClientsIndexRoute
+  '/interviews/': typeof InterviewsIndexRoute
+  '/invoices/': typeof InvoicesIndexRoute
+  '/proposals/': typeof ProposalsIndexRoute
+  '/invoices/$id/edit': typeof InvoicesIdEditRoute
+  '/invoices/$id/print': typeof InvoicesIdPrintRoute
+  '/invoices/$id/': typeof InvoicesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/privacy'
+    | '/settings'
+    | '/sitemap.xml'
+    | '/clients/$id'
+    | '/interviews/$id'
+    | '/invoices/new'
+    | '/proposals/$id'
+    | '/clients/'
+    | '/interviews/'
+    | '/invoices/'
+    | '/proposals/'
+    | '/invoices/$id/edit'
+    | '/invoices/$id/print'
+    | '/invoices/$id/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/privacy'
+    | '/settings'
+    | '/sitemap.xml'
+    | '/clients/$id'
+    | '/interviews/$id'
+    | '/invoices/new'
+    | '/proposals/$id'
+    | '/clients'
+    | '/interviews'
+    | '/invoices'
+    | '/proposals'
+    | '/invoices/$id/edit'
+    | '/invoices/$id/print'
+    | '/invoices/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/privacy'
+    | '/settings'
+    | '/sitemap.xml'
+    | '/clients/$id'
+    | '/interviews/$id'
+    | '/invoices/new'
+    | '/proposals/$id'
+    | '/clients/'
+    | '/interviews/'
+    | '/invoices/'
+    | '/proposals/'
+    | '/invoices/$id/edit'
+    | '/invoices/$id/print'
+    | '/invoices/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  PrivacyRoute: typeof PrivacyRoute
+  SettingsRoute: typeof SettingsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ClientsIdRoute: typeof ClientsIdRoute
+  InterviewsIdRoute: typeof InterviewsIdRoute
+  InvoicesNewRoute: typeof InvoicesNewRoute
+  ProposalsIdRoute: typeof ProposalsIdRoute
+  ClientsIndexRoute: typeof ClientsIndexRoute
+  InterviewsIndexRoute: typeof InterviewsIndexRoute
+  InvoicesIndexRoute: typeof InvoicesIndexRoute
+  ProposalsIndexRoute: typeof ProposalsIndexRoute
+  InvoicesIdEditRoute: typeof InvoicesIdEditRoute
+  InvoicesIdPrintRoute: typeof InvoicesIdPrintRoute
+  InvoicesIdIndexRoute: typeof InvoicesIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +275,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/proposals/': {
+      id: '/proposals/'
+      path: '/proposals'
+      fullPath: '/proposals/'
+      preLoaderRoute: typeof ProposalsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices/': {
+      id: '/invoices/'
+      path: '/invoices'
+      fullPath: '/invoices/'
+      preLoaderRoute: typeof InvoicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interviews/': {
+      id: '/interviews/'
+      path: '/interviews'
+      fullPath: '/interviews/'
+      preLoaderRoute: typeof InterviewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clients/': {
+      id: '/clients/'
+      path: '/clients'
+      fullPath: '/clients/'
+      preLoaderRoute: typeof ClientsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proposals/$id': {
+      id: '/proposals/$id'
+      path: '/proposals/$id'
+      fullPath: '/proposals/$id'
+      preLoaderRoute: typeof ProposalsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices/new': {
+      id: '/invoices/new'
+      path: '/invoices/new'
+      fullPath: '/invoices/new'
+      preLoaderRoute: typeof InvoicesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interviews/$id': {
+      id: '/interviews/$id'
+      path: '/interviews/$id'
+      fullPath: '/interviews/$id'
+      preLoaderRoute: typeof InterviewsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clients/$id': {
+      id: '/clients/$id'
+      path: '/clients/$id'
+      fullPath: '/clients/$id'
+      preLoaderRoute: typeof ClientsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices/$id/': {
+      id: '/invoices/$id/'
+      path: '/invoices/$id'
+      fullPath: '/invoices/$id/'
+      preLoaderRoute: typeof InvoicesIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices/$id/print': {
+      id: '/invoices/$id/print'
+      path: '/invoices/$id/print'
+      fullPath: '/invoices/$id/print'
+      preLoaderRoute: typeof InvoicesIdPrintRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invoices/$id/edit': {
+      id: '/invoices/$id/edit'
+      path: '/invoices/$id/edit'
+      fullPath: '/invoices/$id/edit'
+      preLoaderRoute: typeof InvoicesIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  PrivacyRoute: PrivacyRoute,
+  SettingsRoute: SettingsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ClientsIdRoute: ClientsIdRoute,
+  InterviewsIdRoute: InterviewsIdRoute,
+  InvoicesNewRoute: InvoicesNewRoute,
+  ProposalsIdRoute: ProposalsIdRoute,
+  ClientsIndexRoute: ClientsIndexRoute,
+  InterviewsIndexRoute: InterviewsIndexRoute,
+  InvoicesIndexRoute: InvoicesIndexRoute,
+  ProposalsIndexRoute: ProposalsIndexRoute,
+  InvoicesIdEditRoute: InvoicesIdEditRoute,
+  InvoicesIdPrintRoute: InvoicesIdPrintRoute,
+  InvoicesIdIndexRoute: InvoicesIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

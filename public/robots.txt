@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /$
+Allow: /about
+Allow: /privacy
+Disallow: /clients
+Disallow: /proposals
+Disallow: /interviews
+Disallow: /invoices
+Disallow: /settings
+
+Sitemap: /sitemap.xml
