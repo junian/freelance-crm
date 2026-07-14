@@ -5,7 +5,7 @@ export const SITE = {
   description:
     "Offline-first CRM for freelancers to organize clients, proposals, interviews, and invoices — data stays in your browser.",
   url: "https://freelance-crm.example.com",
-  ogImage: "/og-image.svg",
+  ogImage: "/og-image.jpg",
   owner: "Freelance CRM",
   privacyEmail: "privacy@example.com",
   themeColor: "#4f46e5",
