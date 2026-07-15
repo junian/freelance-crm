@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo } from "react";
+import { toast } from "sonner";
 import { AppShell, Card, PageHeader } from "@/components/app-shell";
+import { Button } from "@/components/ui/button";
 import { useAppData } from "@/lib/app-data";
 import { formatDate, formatMoney } from "@/lib/format";
 import { ProposalStateBadge, InvoiceStatusBadge } from "@/components/status-badge";
@@ -11,6 +13,7 @@ import {
   Receipt,
   TrendingUp,
   Coins,
+  Sparkles,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
