@@ -110,5 +110,5 @@ export async function seedDemoIfNeeded() {
   };
   await stores.invoices.set(inv.id, inv);
 
-  await savePreferences({ ...prefs, seededDemo: true });
+  await savePreferences({ ...prefs, seededDemo: true, hasDemoData: true });
 }
