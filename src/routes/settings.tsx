@@ -286,6 +286,7 @@ function SettingsPage() {
               className="bg-rose-600 hover:bg-rose-700"
               onClick={async () => {
                 await resetAll();
+                await seedDemoIfNeeded();
                 await refresh();
                 toast.success("All data deleted");
                 setConfirmReset(false);
