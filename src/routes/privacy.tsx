@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { AppShell, PageHeader } from "@/components/app-shell";
 import { SITE } from "@/lib/site-config";
-import { PublicLayout } from "./about";
 
 const LAST_UPDATED = "2026-07-14";
 
@@ -35,10 +35,12 @@ export const Route = createFileRoute("/privacy")({
 
 function PrivacyPage() {
   return (
-    <PublicLayout>
-      <article className="prose prose-slate dark:prose-invert max-w-none">
-        <h1>Privacy Policy</h1>
-        <p className="text-sm text-slate-500">Last updated: {LAST_UPDATED}</p>
+    <AppShell>
+      <PageHeader
+        title="Privacy Policy"
+        description={`Last updated: ${LAST_UPDATED}`}
+      />
+      <article className="prose prose-slate dark:prose-invert max-w-3xl prose-headings:tracking-tight prose-h2:mt-10 prose-h2:mb-3 prose-h3:mt-6 prose-h3:mb-2 prose-p:leading-relaxed prose-li:leading-relaxed prose-p:my-4 prose-ul:my-4">
         <p className="text-sm italic text-slate-500">
           Site operators: please review this policy for your jurisdiction before publishing.
         </p>
@@ -105,6 +107,6 @@ function PrivacyPage() {
           <a href={`mailto:${SITE.privacyEmail}`}>{SITE.privacyEmail}</a>.
         </p>
       </article>
-    </PublicLayout>
+    </AppShell>
   );
 }

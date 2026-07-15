@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { AppShell, PageHeader } from "@/components/app-shell";
 import { SITE } from "@/lib/site-config";
 
 export const Route = createFileRoute("/about")({
@@ -38,10 +39,13 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   return (
-    <PublicLayout>
-      <article className="prose prose-slate dark:prose-invert max-w-none">
-        <h1>About {SITE.name}</h1>
-        <p className="lead">
+    <AppShell>
+      <PageHeader
+        title={`About ${SITE.name}`}
+        description="An offline-first CRM built for freelancers."
+      />
+      <article className="prose prose-slate dark:prose-invert max-w-3xl prose-headings:tracking-tight prose-h2:mt-10 prose-h2:mb-3 prose-p:leading-relaxed prose-li:leading-relaxed prose-p:my-4 prose-ul:my-4">
+        <p className="lead text-base">
           {SITE.name} is an offline-first CRM designed primarily for Upwork freelancers, and
           equally useful for freelancers on any platform. It helps you organize clients,
           proposals, interviews, and invoices — all in one place.
@@ -85,30 +89,6 @@ function AboutPage() {
           </Link>
         </div>
       </article>
-    </PublicLayout>
-  );
-}
-
-export function PublicLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-      <header className="border-b bg-white dark:bg-slate-900">
-        <div className="max-w-4xl mx-auto flex items-center justify-between px-6 py-4">
-          <Link to="/" className="font-semibold text-lg">{SITE.name}</Link>
-          <nav className="flex gap-4 text-sm">
-            <Link to="/" className="hover:text-indigo-600">App</Link>
-            <Link to="/about" className="hover:text-indigo-600">About</Link>
-            <Link to="/privacy" className="hover:text-indigo-600">Privacy</Link>
-          </nav>
-        </div>
-      </header>
-      <main className="max-w-3xl mx-auto px-6 py-10">{children}</main>
-      <footer className="border-t bg-white dark:bg-slate-900 mt-16">
-        <div className="max-w-4xl mx-auto px-6 py-6 text-xs text-slate-500 flex justify-between">
-          <span>© {new Date().getFullYear()} {SITE.owner}</span>
-          <span>Local-only. No account required.</span>
-        </div>
-      </footer>
-    </div>
+    </AppShell>
   );
 }
