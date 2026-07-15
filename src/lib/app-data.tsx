@@ -282,7 +282,7 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
       stores.interviews.clear(),
       stores.invoices.clear(),
     ]);
-    await savePreferences({ ...prefs, seededDemo: true });
+    await savePreferences({ ...prefs, seededDemo: true, hasDemoData: false });
     await refresh();
   };
 

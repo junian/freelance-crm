@@ -67,6 +67,7 @@ export const DEFAULT_PREFS: Preferences = {
   theme: "system",
   defaultCurrency: "USD",
   seededDemo: false,
+  hasDemoData: false,
   defaultIssuer: {
     name: "",
     contactLines: [],
