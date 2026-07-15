@@ -186,7 +186,7 @@ function SidebarContent({
         )}
       </div>
       <nav className={cn("flex-1 overflow-y-auto", collapsed ? "p-2" : "p-3")}>
-        <div className={cn("hidden md:block mb-3", collapsed && "flex justify-center")}>
+        <div className={cn("hidden mb-3", collapsed ? "md:flex md:justify-center" : "md:block")}>
           <QuickAdd full={!collapsed} iconOnly={collapsed} />
         </div>
         <ul className="space-y-1">
