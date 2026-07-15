@@ -103,6 +103,31 @@ function DashboardInner() {
         description="At-a-glance activity from your local records."
       />
 
+      {prefs.hasDemoData && (
+        <Card className="p-4 mb-4 flex flex-col sm:flex-row sm:items-center gap-3 border-indigo-200 bg-indigo-50/60 dark:border-indigo-900/50 dark:bg-indigo-500/10">
+          <div className="flex items-start gap-3 flex-1">
+            <Sparkles className="w-5 h-5 mt-0.5 text-indigo-600 dark:text-indigo-300 shrink-0" />
+            <div className="text-sm">
+              <div className="font-medium text-slate-900 dark:text-slate-100">
+                You're viewing this app with demo data
+              </div>
+              <div className="text-slate-600 dark:text-slate-400 mt-0.5">
+                Clear the sample clients, proposals, interviews and invoices to start fresh.
+              </div>
+            </div>
+          </div>
+          <Button
+            onClick={async () => {
+              await deleteDemoData();
+              toast.success("Demo data removed");
+            }}
+          >
+            Start fresh
+          </Button>
+        </Card>
+      )}
+
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard to="/clients" icon={Users} label="Clients" value={clients.length} />
         <StatCard
