@@ -35,7 +35,7 @@ function Dashboard() {
 }
 
 function DashboardInner() {
-  const { clients, proposals, interviews, invoices } = useAppData();
+  const { clients, proposals, interviews, invoices, prefs, deleteDemoData } = useAppData();
 
   const activeProposals = useMemo(
     () => proposals.filter((p) => p.finalState !== "deleted"),
