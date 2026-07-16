@@ -1,12 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AppShell, Card, PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { MarkdownEditor } from "@/components/markdown-editor";
 import { useAppData } from "@/lib/app-data";
-import { renderMarkdown } from "@/lib/markdown";
 import { ArrowLeft, Trash2 } from "lucide-react";
 import {
   AlertDialog,
@@ -38,51 +36,43 @@ function InterviewEditor() {
   const { interviews, proposals, updateInterview, deleteInterview } = useAppData();
   const interview = interviews.find((i) => i.id === id) ?? null;
   const proposal = interview ? proposals.find((p) => p.id === interview.proposalId) : null;
-  const [notes, setNotes] = useState(interview?.notesMarkdown ?? "");
   const [saved, setSaved] = useState(true);
   const [saving, setSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const navigate = useNavigate();
-  const timerRef = useRef<number | null>(null);
-  const lastLoadedId = useRef<string | null>(null);
+  const savedRef = useRef(true);
 
-  useEffect(() => {
-    if (interview && lastLoadedId.current !== interview.id) {
-      setNotes(interview.notesMarkdown);
-      lastLoadedId.current = interview.id;
-      setSaved(true);
-    }
-  }, [interview]);
+  const initialMarkdown = interview?.notesMarkdown ?? "";
 
-  useEffect(() => {
-    if (!interview) return;
-    if (notes === interview.notesMarkdown) return;
-    setSaved(false);
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(async () => {
+  const handleChange = useCallback(
+    async (md: string) => {
+      if (!interview) return;
+      if (md === interview.notesMarkdown) {
+        setSaved(true);
+        savedRef.current = true;
+        return;
+      }
+      setSaved(false);
+      savedRef.current = false;
       setSaving(true);
-      await updateInterview(interview.id, { notesMarkdown: notes });
+      await updateInterview(interview.id, { notesMarkdown: md });
       setSaving(false);
       setSaved(true);
-    }, 600);
-    return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notes]);
+      savedRef.current = true;
+    },
+    [interview, updateInterview],
+  );
 
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
-      if (!saved) {
+      if (!savedRef.current) {
         e.preventDefault();
         e.returnValue = "";
       }
     };
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
-  }, [saved]);
-
-  const rendered = useMemo(() => renderMarkdown(notes), [notes]);
+  }, []);
 
   if (!interview) {
     return (
@@ -120,43 +110,11 @@ function InterviewEditor() {
         }
       />
 
-      <Tabs defaultValue="split">
-        <TabsList>
-          <TabsTrigger value="edit">Edit</TabsTrigger>
-          <TabsTrigger value="preview">Preview</TabsTrigger>
-          <TabsTrigger value="split">Split</TabsTrigger>
-        </TabsList>
-        <TabsContent value="edit">
-          <MarkdownToolbar onInsert={(t) => setNotes((n) => n + t)} />
-          <Textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            rows={22}
-            className="font-mono text-sm"
-          />
-        </TabsContent>
-        <TabsContent value="preview">
-          <Card className="p-6 prose prose-slate dark:prose-invert max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: rendered }} />
-          </Card>
-        </TabsContent>
-        <TabsContent value="split">
-          <div className="grid gap-4 lg:grid-cols-2">
-            <div>
-              <MarkdownToolbar onInsert={(t) => setNotes((n) => n + t)} />
-              <Textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={22}
-                className="font-mono text-sm"
-              />
-            </div>
-            <Card className="p-6 prose prose-slate dark:prose-invert max-w-none overflow-auto">
-              <div dangerouslySetInnerHTML={{ __html: rendered }} />
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
+      <MarkdownEditor
+        key={interview.id}
+        value={initialMarkdown}
+        onChange={handleChange}
+      />
 
       <AlertDialog open={confirmDelete} onOpenChange={setConfirmDelete}>
         <AlertDialogContent>
@@ -182,27 +140,5 @@ function InterviewEditor() {
         </AlertDialogContent>
       </AlertDialog>
     </>
-  );
-}
-
-function MarkdownToolbar({ onInsert }: { onInsert: (t: string) => void }) {
-  const buttons = [
-    { label: "H2", insert: "\n## " },
-    { label: "Bold", insert: "**bold**" },
-    { label: "Italic", insert: "_italic_" },
-    { label: "List", insert: "\n- item" },
-    { label: "Check", insert: "\n- [ ] task" },
-    { label: "Quote", insert: "\n> " },
-    { label: "Code", insert: "`code`" },
-    { label: "Link", insert: "[text](https://)" },
-  ];
-  return (
-    <div className="flex flex-wrap gap-1 mb-2">
-      {buttons.map((b) => (
-        <Button key={b.label} size="sm" variant="outline" onClick={() => onInsert(b.insert)}>
-          {b.label}
-        </Button>
-      ))}
-    </div>
   );
 }
