@@ -6,6 +6,8 @@ import { createEditor, jsonFromHTML } from "prosekit/core";
 import { ProseKit, useDocChange } from "prosekit/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { htmlFromMarkdown, markdownFromHTML } from "@/lib/markdown-convert";
+import { ProseKitToolbar } from "@/components/prosekit-toolbar";
+import { useT } from "@/lib/i18n";
 
 type Props = {
   value: string;
