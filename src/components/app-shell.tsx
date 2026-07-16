@@ -49,6 +49,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const { ready } = useAppData();
+  const { t } = useT();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <header className="md:hidden sticky top-0 z-30 flex items-center justify-between border-b bg-white dark:bg-slate-900 px-4 h-14">
           <button
             onClick={() => setOpen(true)}
-            aria-label="Open navigation"
+            aria-label={t("nav.openNav")}
             className="p-2 -ml-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             <Menu className="w-5 h-5" />
@@ -116,7 +117,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <span className="font-semibold">{SITE.name}</span>
                   <button
                     onClick={() => setOpen(false)}
-                    aria-label="Close navigation"
+                    aria-label={t("nav.closeNav")}
                     className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                   >
                     <X className="w-5 h-5" />
@@ -135,7 +136,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="max-w-6xl mx-auto p-4 md:p-8">
               {!ready ? (
                 <div className="flex items-center justify-center py-24 text-sm text-slate-500">
-                  Loading local data…
+                  {t("common.loading")}
                 </div>
               ) : (
                 children
