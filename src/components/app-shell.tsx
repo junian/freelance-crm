@@ -25,21 +25,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useAppData } from "@/lib/app-data";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { SITE } from "@/lib/site-config";
 
 const NAV = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/clients", label: "Clients", icon: Users },
-  { to: "/proposals", label: "Proposals", icon: FileText },
-  { to: "/interviews", label: "Interviews", icon: MessagesSquare },
-  { to: "/invoices", label: "Invoices", icon: Receipt },
+  { to: "/", labelKey: "nav.dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/clients", labelKey: "nav.clients", icon: Users },
+  { to: "/proposals", labelKey: "nav.proposals", icon: FileText },
+  { to: "/interviews", labelKey: "nav.interviews", icon: MessagesSquare },
+  { to: "/invoices", labelKey: "nav.invoices", icon: Receipt },
 ];
 
 const SECONDARY = [
-  { to: "/about", label: "About", icon: Info },
-  { to: "/privacy", label: "Privacy", icon: Shield },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/about", labelKey: "nav.about", icon: Info },
+  { to: "/privacy", labelKey: "nav.privacy", icon: Shield },
+  { to: "/settings", labelKey: "nav.settings", icon: Settings },
 ];
 
 const COLLAPSE_KEY = "fcrm.sidebarCollapsed";
