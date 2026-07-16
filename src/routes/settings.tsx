@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAppData } from "@/lib/app-data";
+import { LANGUAGES, useT } from "@/lib/i18n";
 import { seedDemoIfNeeded } from "@/lib/seed";
 import {
   downloadCsv,
