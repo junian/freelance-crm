@@ -233,7 +233,7 @@ function SidebarContent({
           )}
         >
           <WifiOff className="w-3.5 h-3.5" />
-          {!collapsed && <span>Stored in this browser</span>}
+          {!collapsed && <span>{t("nav.storedLocally")}</span>}
         </div>
       </div>
     </>
@@ -287,29 +287,30 @@ function NavItem({
 }
 
 function QuickAdd({ full, iconOnly }: { full?: boolean; iconOnly?: boolean }) {
+  const { t } = useT();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {iconOnly ? (
-          <Button size="icon" aria-label="Quick add">
+          <Button size="icon" aria-label={t("nav.quickAdd")}>
             <Plus className="w-4 h-4" />
           </Button>
         ) : (
           <Button size={full ? "default" : "sm"} className={cn("gap-2", full && "w-full")}>
             <Plus className="w-4 h-4" />
-            Quick add
+            {t("nav.quickAdd")}
           </Button>
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link to="/clients" hash="new">New client</Link>
+          <Link to="/clients" hash="new">{t("nav.newClient")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/proposals" hash="new">New proposal</Link>
+          <Link to="/proposals" hash="new">{t("nav.newProposal")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/invoices/new">New invoice</Link>
+          <Link to="/invoices/new">{t("nav.newInvoice")}</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
