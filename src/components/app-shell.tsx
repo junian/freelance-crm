@@ -159,6 +159,7 @@ function SidebarContent({
   collapsed: boolean;
   onToggleCollapsed?: () => void;
 }) {
+  const { t } = useT();
   return (
     <>
       <div
@@ -175,7 +176,7 @@ function SidebarContent({
         {onToggleCollapsed && (
           <button
             onClick={onToggleCollapsed}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={collapsed ? t("nav.expandSidebar") : t("nav.collapseSidebar")}
             className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400"
           >
             {collapsed ? (
@@ -194,7 +195,9 @@ function SidebarContent({
           {NAV.map((item) => (
             <NavItem
               key={item.to}
-              {...item}
+              to={item.to}
+              icon={item.icon}
+              label={t(item.labelKey)}
               collapsed={collapsed}
               active={isActive(item.to, item.exact)}
               onClick={onNavigate}
@@ -203,7 +206,7 @@ function SidebarContent({
         </ul>
         {!collapsed && (
           <div className="mt-6 mb-2 px-3 text-[11px] uppercase tracking-wider text-slate-500">
-            General
+            {t("nav.general")}
           </div>
         )}
         {collapsed && <div className="my-3 mx-2 border-t" />}
@@ -211,7 +214,9 @@ function SidebarContent({
           {SECONDARY.map((item) => (
             <NavItem
               key={item.to}
-              {...item}
+              to={item.to}
+              icon={item.icon}
+              label={t(item.labelKey)}
               collapsed={collapsed}
               active={isActive(item.to)}
               onClick={onNavigate}
