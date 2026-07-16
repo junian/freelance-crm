@@ -25,21 +25,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useAppData } from "@/lib/app-data";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { SITE } from "@/lib/site-config";
 
 const NAV = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/clients", label: "Clients", icon: Users },
-  { to: "/proposals", label: "Proposals", icon: FileText },
-  { to: "/interviews", label: "Interviews", icon: MessagesSquare },
-  { to: "/invoices", label: "Invoices", icon: Receipt },
+  { to: "/", labelKey: "nav.dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/clients", labelKey: "nav.clients", icon: Users },
+  { to: "/proposals", labelKey: "nav.proposals", icon: FileText },
+  { to: "/interviews", labelKey: "nav.interviews", icon: MessagesSquare },
+  { to: "/invoices", labelKey: "nav.invoices", icon: Receipt },
 ];
 
 const SECONDARY = [
-  { to: "/about", label: "About", icon: Info },
-  { to: "/privacy", label: "Privacy", icon: Shield },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/about", labelKey: "nav.about", icon: Info },
+  { to: "/privacy", labelKey: "nav.privacy", icon: Shield },
+  { to: "/settings", labelKey: "nav.settings", icon: Settings },
 ];
 
 const COLLAPSE_KEY = "fcrm.sidebarCollapsed";
@@ -48,6 +49,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const { ready } = useAppData();
+  const { t } = useT();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -77,7 +79,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <header className="md:hidden sticky top-0 z-30 flex items-center justify-between border-b bg-white dark:bg-slate-900 px-4 h-14">
           <button
             onClick={() => setOpen(true)}
-            aria-label="Open navigation"
+            aria-label={t("nav.openNav")}
             className="p-2 -ml-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             <Menu className="w-5 h-5" />
@@ -115,7 +117,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   <span className="font-semibold">{SITE.name}</span>
                   <button
                     onClick={() => setOpen(false)}
-                    aria-label="Close navigation"
+                    aria-label={t("nav.closeNav")}
                     className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                   >
                     <X className="w-5 h-5" />
@@ -134,7 +136,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <div className="max-w-6xl mx-auto p-4 md:p-8">
               {!ready ? (
                 <div className="flex items-center justify-center py-24 text-sm text-slate-500">
-                  Loading local data…
+                  {t("common.loading")}
                 </div>
               ) : (
                 children
@@ -158,6 +160,7 @@ function SidebarContent({
   collapsed: boolean;
   onToggleCollapsed?: () => void;
 }) {
+  const { t } = useT();
   return (
     <>
       <div
@@ -174,7 +177,7 @@ function SidebarContent({
         {onToggleCollapsed && (
           <button
             onClick={onToggleCollapsed}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={collapsed ? t("nav.expandSidebar") : t("nav.collapseSidebar")}
             className="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400"
           >
             {collapsed ? (
@@ -193,7 +196,9 @@ function SidebarContent({
           {NAV.map((item) => (
             <NavItem
               key={item.to}
-              {...item}
+              to={item.to}
+              icon={item.icon}
+              label={t(item.labelKey)}
               collapsed={collapsed}
               active={isActive(item.to, item.exact)}
               onClick={onNavigate}
@@ -202,7 +207,7 @@ function SidebarContent({
         </ul>
         {!collapsed && (
           <div className="mt-6 mb-2 px-3 text-[11px] uppercase tracking-wider text-slate-500">
-            General
+            {t("nav.general")}
           </div>
         )}
         {collapsed && <div className="my-3 mx-2 border-t" />}
@@ -210,7 +215,9 @@ function SidebarContent({
           {SECONDARY.map((item) => (
             <NavItem
               key={item.to}
-              {...item}
+              to={item.to}
+              icon={item.icon}
+              label={t(item.labelKey)}
               collapsed={collapsed}
               active={isActive(item.to)}
               onClick={onNavigate}
@@ -226,7 +233,7 @@ function SidebarContent({
           )}
         >
           <WifiOff className="w-3.5 h-3.5" />
-          {!collapsed && <span>Stored in this browser</span>}
+          {!collapsed && <span>{t("nav.storedLocally")}</span>}
         </div>
       </div>
     </>
@@ -280,29 +287,30 @@ function NavItem({
 }
 
 function QuickAdd({ full, iconOnly }: { full?: boolean; iconOnly?: boolean }) {
+  const { t } = useT();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {iconOnly ? (
-          <Button size="icon" aria-label="Quick add">
+          <Button size="icon" aria-label={t("nav.quickAdd")}>
             <Plus className="w-4 h-4" />
           </Button>
         ) : (
           <Button size={full ? "default" : "sm"} className={cn("gap-2", full && "w-full")}>
             <Plus className="w-4 h-4" />
-            Quick add
+            {t("nav.quickAdd")}
           </Button>
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link to="/clients" hash="new">New client</Link>
+          <Link to="/clients" hash="new">{t("nav.newClient")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/proposals" hash="new">New proposal</Link>
+          <Link to="/proposals" hash="new">{t("nav.newProposal")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/invoices/new">New invoice</Link>
+          <Link to="/invoices/new">{t("nav.newInvoice")}</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

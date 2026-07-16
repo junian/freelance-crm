@@ -6,6 +6,8 @@ import { createEditor, jsonFromHTML } from "prosekit/core";
 import { ProseKit, useDocChange } from "prosekit/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { htmlFromMarkdown, markdownFromHTML } from "@/lib/markdown-convert";
+import { ProseKitToolbar } from "@/components/prosekit-toolbar";
+import { useT } from "@/lib/i18n";
 
 type Props = {
   value: string;
@@ -77,9 +79,29 @@ function Bound({
     };
   }, []);
 
+  const { t } = useT();
+  const toolbarLabels = {
+    undo: t("editor.undo"),
+    redo: t("editor.redo"),
+    h1: t("editor.h1"),
+    h2: t("editor.h2"),
+    h3: t("editor.h3"),
+    bold: t("editor.bold"),
+    italic: t("editor.italic"),
+    underline: t("editor.underline"),
+    strike: t("editor.strike"),
+    code: t("editor.code"),
+    bulletList: t("editor.bulletList"),
+    orderedList: t("editor.orderedList"),
+    blockquote: t("editor.blockquote"),
+    codeBlock: t("editor.codeBlock"),
+    hr: t("editor.hr"),
+  };
+
   return (
     <ProseKit editor={editor}>
-      <div className="rounded-md border border-input bg-background shadow-sm">
+      <div className="rounded-md border border-input bg-background shadow-sm overflow-hidden">
+        <ProseKitToolbar labels={toolbarLabels} />
         <div
           ref={editor.mount}
           className="ProseMirror prose prose-slate dark:prose-invert max-w-none min-h-[400px] px-5 py-4 outline-none focus:outline-none"
