@@ -161,23 +161,41 @@ function SettingsPage() {
 
   return (
     <>
-      <PageHeader title="Settings" description="All data lives in this browser." />
+      <PageHeader title={t("settings.title")} description={t("settings.subtitle")} />
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="p-5">
-          <div className="font-semibold mb-3">Appearance</div>
-          <Label>Theme</Label>
-          <Select
-            value={prefs.theme}
-            onValueChange={(v) => setPrefs({ ...prefs, theme: v as "light" | "dark" | "system" })}
-          >
-            <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="font-semibold mb-3">{t("settings.appearance")}</div>
+          <div className="space-y-4">
+            <div>
+              <Label>{t("settings.theme")}</Label>
+              <Select
+                value={prefs.theme}
+                onValueChange={(v) => setPrefs({ ...prefs, theme: v as "light" | "dark" | "system" })}
+              >
+                <SelectTrigger className="w-48 mt-1.5"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">{t("settings.themeLight")}</SelectItem>
+                  <SelectItem value="dark">{t("settings.themeDark")}</SelectItem>
+                  <SelectItem value="system">{t("settings.themeSystem")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>{t("settings.language")}</Label>
+              <Select
+                value={prefs.language}
+                onValueChange={(v) => setPrefs({ ...prefs, language: v as "en" | "id" })}
+              >
+                <SelectTrigger className="w-48 mt-1.5"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {LANGUAGES.map((l) => (
+                    <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </Card>
 
         <Card className="p-5">
