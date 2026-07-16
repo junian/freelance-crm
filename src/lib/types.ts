@@ -90,6 +90,7 @@ export type Invoice = {
 
 export type Preferences = {
   theme: "light" | "dark" | "system";
+  language: "en" | "id";
   defaultIssuer: InvoicePartySnapshot;
   defaultCurrency: string;
   seededDemo: boolean;
