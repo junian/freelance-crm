@@ -52,6 +52,7 @@ export const Route = createFileRoute("/settings")({
 function SettingsPage() {
   const { prefs, setPrefs, clients, proposals, interviews, invoices, refresh, deleteDemoData } =
     useAppData();
+  const { t } = useT();
   const [importMode, setImportMode] = useState<"replace" | "merge">("merge");
   const [pending, setPending] = useState<null | { data: ReturnType<typeof validateBackup> }>(null);
   const [confirmReset, setConfirmReset] = useState(false);
