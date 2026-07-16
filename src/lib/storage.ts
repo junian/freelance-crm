@@ -65,6 +65,7 @@ export const stores = {
 
 export const DEFAULT_PREFS: Preferences = {
   theme: "system",
+  language: "en",
   defaultCurrency: "USD",
   seededDemo: false,
   hasDemoData: false,
