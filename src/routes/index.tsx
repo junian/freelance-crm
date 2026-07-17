@@ -19,7 +19,7 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dashboard — Freelance CRM" },
+      { title: "CRM for Freelancer" },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),
