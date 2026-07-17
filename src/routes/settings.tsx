@@ -236,9 +236,7 @@ function SettingsPage() {
 
         <StorageUsageCard />
 
-
-
-        <Card className="p-5 md:col-span-2 border-rose-200 dark:border-rose-900/50">
+        <Card className="p-5 border-rose-200 dark:border-rose-900/50">
           <div className="font-semibold mb-3 text-rose-700 dark:text-rose-400">Danger zone</div>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" onClick={async () => { await deleteDemoData(); toast.success("Demo data removed"); }}>
