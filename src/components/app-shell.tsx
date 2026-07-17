@@ -15,6 +15,8 @@ import {
   WifiOff,
   PanelLeftClose,
   PanelLeftOpen,
+  Globe,
+  Coffee,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
