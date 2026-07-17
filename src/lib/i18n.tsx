@@ -30,6 +30,8 @@ const en: Dict = {
   "nav.closeNav": "Close navigation",
   "nav.expandSidebar": "Expand sidebar",
   "nav.collapseSidebar": "Collapse sidebar",
+  "nav.developer": "Junian Dev",
+  "nav.buyMeCoffee": "Buy me a Coffee",
   "common.loading": "Loading local data…",
   "common.cancel": "Cancel",
   "common.save": "Save",
