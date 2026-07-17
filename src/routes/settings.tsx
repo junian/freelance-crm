@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AppShell, Card, PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
@@ -340,18 +340,8 @@ function formatBytes(bytes: number): string {
 }
 
 function StorageUsageCard() {
-  const { clients, proposals, interviews, invoices, prefs } = useAppData();
   const [estimate, setEstimate] = useState<{ usage: number; quota: number } | null>(null);
   const [supported, setSupported] = useState(true);
-
-  const appUsage = useMemo(() => {
-    try {
-      const payload = JSON.stringify({ clients, proposals, interviews, invoices, prefs });
-      return new Blob([payload]).size;
-    } catch {
-      return 0;
-    }
-  }, [clients, proposals, interviews, invoices, prefs]);
 
   const refresh = async () => {
     if (typeof navigator === "undefined" || !navigator.storage || !navigator.storage.estimate) {
@@ -369,14 +359,11 @@ function StorageUsageCard() {
   useEffect(() => {
     refresh();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appUsage]);
+  }, []);
 
   const usage = estimate?.usage ?? 0;
   const quota = estimate?.quota ?? 0;
-  const other = Math.max(0, usage - appUsage);
-  const available = Math.max(0, quota - usage);
-  const appPct = quota ? Math.min(100, (appUsage / quota) * 100) : 0;
-  const otherPct = quota ? Math.min(100, (other / quota) * 100) : 0;
+  const pct = quota ? Math.min(100, (usage / quota) * 100) : 0;
 
   return (
     <Card className="p-5 md:col-span-2">
@@ -395,34 +382,54 @@ function StorageUsageCard() {
           Your browser doesn&apos;t expose storage estimates.
         </p>
       ) : (
-        <>
-          <div className="h-3 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden flex mb-3">
-            <div
-              className="h-full bg-indigo-500"
-              style={{ width: `${appPct}%` }}
-              title={`This app: ${formatBytes(appUsage)}`}
-            />
-            <div
-              className="h-full bg-slate-400 dark:bg-slate-600"
-              style={{ width: `${otherPct}%` }}
-              title={`Other site data: ${formatBytes(other)}`}
-            />
+        <div className="flex items-center gap-6">
+          <div className="flex-1 grid grid-cols-2 gap-3 text-sm">
+            <Stat label="Usage" value={formatBytes(usage)} />
+            <Stat label="Quota" value={formatBytes(quota)} />
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            <Stat label="This app" value={formatBytes(appUsage)} accent="indigo" />
-            <Stat label="Other site data" value={formatBytes(other)} accent="slate" />
-            <Stat label="Available" value={formatBytes(available)} />
-            <Stat label="Total quota" value={formatBytes(quota)} />
-          </div>
-
-          <p className="text-xs text-slate-500 mt-3">
-            &quot;Other site data&quot; includes anything this origin has stored outside the CRM
-            (browser caches, service worker assets, cookies indexed by storage).
-          </p>
-        </>
+          <CircularProgress value={pct} />
+        </div>
       )}
     </Card>
+  );
+}
+
+
+function CircularProgress({ value }: { value: number }) {
+  const radius = 36;
+  const stroke = 8;
+  const normalized = Math.min(100, Math.max(0, value));
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (normalized / 100) * circumference;
+  return (
+    <div className="relative w-20 h-20 shrink-0">
+      <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
+        <circle
+          cx="40"
+          cy="40"
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={stroke}
+          className="text-muted"
+        />
+        <circle
+          cx="40"
+          cy="40"
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="text-primary transition-all duration-500 ease-out"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-sm font-semibold">{Math.round(normalized)}%</span>
+      </div>
+    </div>
   );
 }
 
@@ -451,4 +458,5 @@ function Stat({
     </div>
   );
 }
+
 
