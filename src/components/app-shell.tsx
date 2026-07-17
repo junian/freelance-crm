@@ -45,6 +45,11 @@ const SECONDARY = [
   { to: "/settings", labelKey: "nav.settings", icon: Settings },
 ];
 
+const EXTERNAL = [
+  { url: "https://www.junian.dev/", labelKey: "nav.developer", icon: Globe },
+  { url: "https://www.junain.dev/coffee/", labelKey: "nav.buyMeCoffee", icon: Coffee },
+];
+
 const COLLAPSE_KEY = "fcrm.sidebarCollapsed";
 
 export function AppShell({ children }: { children: ReactNode }) {
