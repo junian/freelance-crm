@@ -364,7 +364,7 @@ function StorageUsageCard() {
   const pct = quota ? Math.min(100, (usage / quota) * 100) : 0;
 
   return (
-    <Card className="p-5 md:col-span-2">
+    <Card className="p-5">
       <div className="flex items-start justify-between mb-3 gap-2">
         <div>
           <div className="font-semibold">Storage usage</div>
