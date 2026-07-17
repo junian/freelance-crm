@@ -231,6 +231,18 @@ function SidebarContent({
             />
           ))}
         </ul>
+        {collapsed && <div className="my-3 mx-2 border-t" />}
+        <ul className="space-y-1">
+          {EXTERNAL.map((item) => (
+            <ExternalItem
+              key={item.url}
+              url={item.url}
+              icon={item.icon}
+              label={t(item.labelKey)}
+              collapsed={collapsed}
+            />
+          ))}
+        </ul>
       </nav>
       <div className={cn("border-t", collapsed ? "p-2" : "p-3")}>
         <div
