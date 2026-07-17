@@ -163,6 +163,12 @@ const id: Dict = {
   "editor.blockquote": "Kutipan",
   "editor.codeBlock": "Blok kode",
   "editor.hr": "Garis horizontal",
+  // about
+  "about.credits": "Kredit",
+  "about.creditsIntro": "Aplikasi ini dibangun di atas library sumber terbuka berikut.",
+  "about.developer": "Pengembang",
+  "about.developerIntro": "Dibuat oleh Junian Dev.",
+  "about.visitDeveloper": "Kunjungi Junian Dev",
 };
 
 const DICTS: Record<Language, Dict> = { en, id };
