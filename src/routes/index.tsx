@@ -326,7 +326,9 @@ function StatCard({
           <Icon className="w-4 h-4" /> {label}
         </div>
         <div className="mt-2 text-3xl font-semibold">{value}</div>
-        {hint && <div className="text-xs text-slate-500 mt-1">{hint}</div>}
+        <div className="text-xs text-slate-500 mt-1" aria-hidden={!hint}>
+          {hint ?? <span className="invisible">.</span>}
+        </div>
       </Card>
     </Link>
   );
