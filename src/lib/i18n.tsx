@@ -84,6 +84,12 @@ const en: Dict = {
   "editor.blockquote": "Quote",
   "editor.codeBlock": "Code block",
   "editor.hr": "Horizontal rule",
+  // about
+  "about.credits": "Credits",
+  "about.creditsIntro": "This app is built on top of the following open-source libraries.",
+  "about.developer": "Developer",
+  "about.developerIntro": "Made by Junian Dev.",
+  "about.visitDeveloper": "Visit Junian Dev",
 };
 
 const id: Dict = {
