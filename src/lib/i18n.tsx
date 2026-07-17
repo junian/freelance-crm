@@ -105,6 +105,8 @@ const id: Dict = {
   "nav.closeNav": "Tutup navigasi",
   "nav.expandSidebar": "Perluas bilah sisi",
   "nav.collapseSidebar": "Ciutkan bilah sisi",
+  "nav.developer": "Junian Dev",
+  "nav.buyMeCoffee": "Buy me a Coffee",
   "common.loading": "Memuat data lokal…",
   "common.cancel": "Batal",
   "common.save": "Simpan",
