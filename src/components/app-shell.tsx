@@ -15,6 +15,8 @@ import {
   WifiOff,
   PanelLeftClose,
   PanelLeftOpen,
+  Globe,
+  Coffee,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +43,11 @@ const SECONDARY = [
   { to: "/about", labelKey: "nav.about", icon: Info },
   { to: "/privacy", labelKey: "nav.privacy", icon: Shield },
   { to: "/settings", labelKey: "nav.settings", icon: Settings },
+];
+
+const EXTERNAL = [
+  { url: "https://www.junian.dev/", labelKey: "nav.developer", icon: Globe },
+  { url: "https://www.junain.dev/coffee/", labelKey: "nav.buyMeCoffee", icon: Coffee },
 ];
 
 const COLLAPSE_KEY = "fcrm.sidebarCollapsed";
@@ -224,6 +231,18 @@ function SidebarContent({
             />
           ))}
         </ul>
+        {collapsed && <div className="my-3 mx-2 border-t" />}
+        <ul className="space-y-1">
+          {EXTERNAL.map((item) => (
+            <ExternalItem
+              key={item.url}
+              url={item.url}
+              icon={item.icon}
+              label={t(item.labelKey)}
+              collapsed={collapsed}
+            />
+          ))}
+        </ul>
       </nav>
       <div className={cn("border-t", collapsed ? "p-2" : "p-3")}>
         <div
@@ -271,6 +290,47 @@ function NavItem({
       <Icon className="w-4 h-4" />
       {!collapsed && label}
     </Link>
+  );
+  return (
+    <li>
+      {collapsed ? (
+        <Tooltip>
+          <TooltipTrigger asChild>{link}</TooltipTrigger>
+          <TooltipContent side="right">{label}</TooltipContent>
+        </Tooltip>
+      ) : (
+        link
+      )}
+    </li>
+  );
+}
+
+function ExternalItem({
+  url,
+  label,
+  icon: Icon,
+  collapsed,
+}: {
+  url: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  collapsed?: boolean;
+}) {
+  const link = (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={collapsed ? label : undefined}
+      className={cn(
+        "flex items-center rounded-md text-sm font-medium transition-colors",
+        collapsed ? "justify-center h-10 w-10 mx-auto" : "gap-3 px-3 py-2",
+        "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800",
+      )}
+    >
+      <Icon className="w-4 h-4" />
+      {!collapsed && label}
+    </a>
   );
   return (
     <li>

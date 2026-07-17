@@ -30,6 +30,8 @@ const en: Dict = {
   "nav.closeNav": "Close navigation",
   "nav.expandSidebar": "Expand sidebar",
   "nav.collapseSidebar": "Collapse sidebar",
+  "nav.developer": "Junian Dev",
+  "nav.buyMeCoffee": "Buy me a Coffee",
   "common.loading": "Loading local data…",
   "common.cancel": "Cancel",
   "common.save": "Save",
@@ -82,6 +84,12 @@ const en: Dict = {
   "editor.blockquote": "Quote",
   "editor.codeBlock": "Code block",
   "editor.hr": "Horizontal rule",
+  // about
+  "about.credits": "Credits",
+  "about.creditsIntro": "This app is built on top of the following open-source libraries.",
+  "about.developer": "Developer",
+  "about.developerIntro": "Made by Junian Dev.",
+  "about.visitDeveloper": "Visit Junian Dev",
 };
 
 const id: Dict = {
@@ -103,6 +111,8 @@ const id: Dict = {
   "nav.closeNav": "Tutup navigasi",
   "nav.expandSidebar": "Perluas bilah sisi",
   "nav.collapseSidebar": "Ciutkan bilah sisi",
+  "nav.developer": "Junian Dev",
+  "nav.buyMeCoffee": "Buy me a Coffee",
   "common.loading": "Memuat data lokal…",
   "common.cancel": "Batal",
   "common.save": "Simpan",
@@ -153,6 +163,12 @@ const id: Dict = {
   "editor.blockquote": "Kutipan",
   "editor.codeBlock": "Blok kode",
   "editor.hr": "Garis horizontal",
+  // about
+  "about.credits": "Kredit",
+  "about.creditsIntro": "Aplikasi ini dibangun di atas library sumber terbuka berikut.",
+  "about.developer": "Pengembang",
+  "about.developerIntro": "Dibuat oleh Junian Dev.",
+  "about.visitDeveloper": "Kunjungi Junian Dev",
 };
 
 const DICTS: Record<Language, Dict> = { en, id };
