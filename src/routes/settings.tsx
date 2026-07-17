@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AppShell, Card, PageHeader } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
@@ -395,6 +395,44 @@ function StorageUsageCard() {
 }
 
 
+function CircularProgress({ value }: { value: number }) {
+  const radius = 36;
+  const stroke = 8;
+  const normalized = Math.min(100, Math.max(0, value));
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (normalized / 100) * circumference;
+  return (
+    <div className="relative w-20 h-20 shrink-0">
+      <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
+        <circle
+          cx="40"
+          cy="40"
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={stroke}
+          className="text-muted"
+        />
+        <circle
+          cx="40"
+          cy="40"
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="text-primary transition-all duration-500 ease-out"
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-sm font-semibold">{Math.round(normalized)}%</span>
+      </div>
+    </div>
+  );
+}
+
 function Stat({
   label,
   value,
@@ -420,4 +458,5 @@ function Stat({
     </div>
   );
 }
+
 
