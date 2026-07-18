@@ -3,8 +3,10 @@ import {
   addRxPlugin,
   type RxDatabase,
   type RxCollection,
+  type RxStorage,
 } from "rxdb";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
+import { wrappedValidateAjvStorage } from "rxdb/plugins/validate-ajv";
 import type {
   Client,
   Interview,
@@ -54,6 +56,11 @@ const rowSchema = {
 let dbPromise: Promise<RxDatabase<Record<StoreName, RowCollection>>> | null =
   null;
 
+function getStorage(): RxStorage<unknown, unknown> {
+  const storage = getRxStorageDexie();
+  return import.meta.env.DEV ? wrappedValidateAjvStorage({ storage }) : storage;
+}
+
 function getDb() {
   if (typeof window === "undefined") {
     return Promise.reject(new Error("RxDB is only available in the browser"));
@@ -62,7 +69,7 @@ function getDb() {
     dbPromise = (async () => {
       const db = await createRxDatabase<Record<StoreName, RowCollection>>({
         name: DB_NAME,
-        storage: getRxStorageDexie(),
+        storage: getStorage(),
         ignoreDuplicate: import.meta.env.DEV,
       });
       const collections = Object.fromEntries(
@@ -70,7 +77,10 @@ function getDb() {
       ) as Record<StoreName, { schema: typeof rowSchema }>;
       await db.addCollections(collections);
       return db;
-    })();
+    })().catch((error) => {
+      dbPromise = null;
+      throw error;
+    });
   }
   return dbPromise;
 }
