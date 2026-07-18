@@ -1,4 +1,10 @@
-import localforage from "localforage";
+import {
+  createRxDatabase,
+  addRxPlugin,
+  type RxDatabase,
+  type RxCollection,
+} from "rxdb";
+import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import type {
   Client,
   Interview,
@@ -7,11 +13,70 @@ import type {
   Proposal,
 } from "./types";
 
-const DB_NAME = "freelance-crm";
+const DB_NAME = "freelance_crm";
 
-function makeStore<T>(name: string) {
+if (import.meta.env.DEV && typeof window !== "undefined") {
+  // Load dev-mode plugin lazily so it never ships to production.
+  import("rxdb/plugins/dev-mode")
+    .then(({ RxDBDevModePlugin, disableWarnings }) => {
+      disableWarnings?.();
+      addRxPlugin(RxDBDevModePlugin);
+    })
+    .catch(() => {
+      /* ignore */
+    });
+}
+
+type Row = { id: string; json: string };
+type RowCollection = RxCollection<Row>;
+
+const STORE_NAMES = [
+  "clients",
+  "proposals",
+  "interviews",
+  "invoices",
+  "preferences",
+] as const;
+
+type StoreName = (typeof STORE_NAMES)[number];
+
+const rowSchema = {
+  version: 0,
+  primaryKey: "id",
+  type: "object",
+  properties: {
+    id: { type: "string", maxLength: 128 },
+    json: { type: "string" },
+  },
+  required: ["id", "json"],
+} as const;
+
+let dbPromise: Promise<RxDatabase<Record<StoreName, RowCollection>>> | null =
+  null;
+
+function getDb() {
   if (typeof window === "undefined") {
-    // SSR stub — never touched at server render time in this app.
+    return Promise.reject(new Error("RxDB is only available in the browser"));
+  }
+  if (!dbPromise) {
+    dbPromise = (async () => {
+      const db = await createRxDatabase<Record<StoreName, RowCollection>>({
+        name: DB_NAME,
+        storage: getRxStorageDexie(),
+        ignoreDuplicate: true,
+      });
+      const collections = Object.fromEntries(
+        STORE_NAMES.map((name) => [name, { schema: rowSchema }]),
+      ) as Record<StoreName, { schema: typeof rowSchema }>;
+      await db.addCollections(collections);
+      return db;
+    })();
+  }
+  return dbPromise;
+}
+
+function makeStore<T>(name: StoreName) {
+  if (typeof window === "undefined") {
     return {
       async getAll(): Promise<T[]> {
         return [];
@@ -25,42 +90,48 @@ function makeStore<T>(name: string) {
       async setMany(_items: [string, T][]): Promise<void> {},
     };
   }
-  const store = localforage.createInstance({
-    name: DB_NAME,
-    storeName: name,
-  });
+  const col = async () => (await getDb())[name];
+  const parse = (r: Row): T => JSON.parse(r.json) as T;
   return {
     async getAll(): Promise<T[]> {
-      const items: T[] = [];
-      await store.iterate<T, void>((v) => {
-        items.push(v);
-      });
-      return items;
+      const c = await col();
+      const docs = await c.find().exec();
+      return docs.map((d) => parse(d.toJSON() as Row));
     },
     async get(id: string): Promise<T | null> {
-      return (await store.getItem<T>(id)) ?? null;
+      const c = await col();
+      const doc = await c.findOne(id).exec();
+      return doc ? parse(doc.toJSON() as Row) : null;
     },
     async set(id: string, v: T): Promise<void> {
-      await store.setItem(id, v);
+      const c = await col();
+      await c.upsert({ id, json: JSON.stringify(v) });
     },
     async remove(id: string): Promise<void> {
-      await store.removeItem(id);
+      const c = await col();
+      const doc = await c.findOne(id).exec();
+      if (doc) await doc.remove();
     },
     async clear(): Promise<void> {
-      await store.clear();
+      const c = await col();
+      await c.find().remove();
     },
     async setMany(items: [string, T][]): Promise<void> {
-      for (const [id, v] of items) await store.setItem(id, v);
+      const c = await col();
+      if (items.length === 0) return;
+      await c.bulkUpsert(
+        items.map(([id, v]) => ({ id, json: JSON.stringify(v) })),
+      );
     },
   };
 }
 
 export const stores = {
-  clients: makeStore<Client>("freelance-crm-clients"),
-  proposals: makeStore<Proposal>("freelance-crm-proposals"),
-  interviews: makeStore<Interview>("freelance-crm-interviews"),
-  invoices: makeStore<Invoice>("freelance-crm-invoices"),
-  preferences: makeStore<unknown>("freelance-crm-preferences"),
+  clients: makeStore<Client>("clients"),
+  proposals: makeStore<Proposal>("proposals"),
+  interviews: makeStore<Interview>("interviews"),
+  invoices: makeStore<Invoice>("invoices"),
+  preferences: makeStore<unknown>("preferences"),
 };
 
 export const DEFAULT_PREFS: Preferences = {
@@ -87,6 +158,6 @@ export async function savePreferences(p: Preferences): Promise<void> {
 }
 
 export const uid = () =>
-  (typeof crypto !== "undefined" && crypto.randomUUID
+  typeof crypto !== "undefined" && crypto.randomUUID
     ? crypto.randomUUID()
-    : Math.random().toString(36).slice(2) + Date.now().toString(36));
+    : Math.random().toString(36).slice(2) + Date.now().toString(36);
