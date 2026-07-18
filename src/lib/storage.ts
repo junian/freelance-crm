@@ -63,7 +63,7 @@ function getDb() {
       const db = await createRxDatabase<Record<StoreName, RowCollection>>({
         name: DB_NAME,
         storage: getRxStorageDexie(),
-        ignoreDuplicate: true,
+        ignoreDuplicate: import.meta.env.DEV,
       });
       const collections = Object.fromEntries(
         STORE_NAMES.map((name) => [name, { schema: rowSchema }]),
