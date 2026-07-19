@@ -5,12 +5,14 @@ import { Card } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useT } from "@/lib/i18n";
+import { useAppData } from "@/lib/app-data";
 import { startSync, stopSync, makeRoomId, type SyncState } from "@/lib/webrtc-sync";
 
 const HASH_PREFIX = "#sync-";
 
 export function SyncCard() {
   const { t } = useT();
+  const { prefs, deleteDemoData } = useAppData();
   const [state, setState] = useState<SyncState>({ status: "idle", peers: 0, progress: 0 });
   const startedRef = useRef(false);
 
@@ -23,6 +25,14 @@ export function SyncCard() {
   const begin = async (roomId: string) => {
     if (startedRef.current) return;
     startedRef.current = true;
+    if (prefs.hasDemoData) {
+      try {
+        await deleteDemoData();
+        toast.info(t("sync.demoRemoved"));
+      } catch {
+        /* noop */
+      }
+    }
     if (typeof window !== "undefined") {
       window.location.hash = `${HASH_PREFIX}${roomId}`;
     }
