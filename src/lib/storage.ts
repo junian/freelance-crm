@@ -136,6 +136,12 @@ function makeStore<T>(name: StoreName) {
   };
 }
 
+export const STORE_LIST = STORE_NAMES;
+export async function getRawCollection(name: StoreName): Promise<RowCollection> {
+  const db = await getDb();
+  return db[name];
+}
+
 export const stores = {
   clients: makeStore<Client>("clients"),
   proposals: makeStore<Proposal>("proposals"),
