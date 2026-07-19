@@ -235,6 +235,8 @@ function SettingsPage() {
           </div>
         </Card>
 
+        <SyncCard />
+
         <StorageUsageCard />
 
         <Card className="p-5 border-rose-200 dark:border-rose-900/50">
