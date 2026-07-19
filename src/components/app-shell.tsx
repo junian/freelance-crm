@@ -47,7 +47,7 @@ const SECONDARY = [
 
 const EXTERNAL = [
   { url: "https://www.junian.dev/", labelKey: "nav.developer", icon: Globe },
-  { url: "https://www.junain.dev/coffee/", labelKey: "nav.buyMeCoffee", icon: Coffee },
+  { url: "https://www.junian.dev/coffee/", labelKey: "nav.buyMeCoffee", icon: Coffee },
 ];
 
 const COLLAPSE_KEY = "fcrm.sidebarCollapsed";
