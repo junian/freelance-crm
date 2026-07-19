@@ -66,7 +66,6 @@ export async function startSync(
       const pool = await replicateWebRTC({
         collection,
         topic: `fcrm-${roomId}-${name}`,
-        secret: roomId,
         connectionHandlerCreator: getConnectionHandlerSimplePeer({}),
         pull: {},
         push: {},
