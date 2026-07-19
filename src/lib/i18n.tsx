@@ -46,6 +46,7 @@ const en: Dict = {
   "sync.done": "Sync complete",
   "sync.peers": "Connected peers",
   "sync.error": "Sync error",
+  "sync.demoRemoved": "Demo data removed before syncing",
   "common.loading": "Loading local data…",
   "common.cancel": "Cancel",
   "common.save": "Save",
