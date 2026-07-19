@@ -25,6 +25,14 @@ export function SyncCard() {
   const begin = async (roomId: string) => {
     if (startedRef.current) return;
     startedRef.current = true;
+    if (prefs.hasDemoData) {
+      try {
+        await deleteDemoData();
+        toast.info(t("sync.demoRemoved"));
+      } catch {
+        /* noop */
+      }
+    }
     if (typeof window !== "undefined") {
       window.location.hash = `${HASH_PREFIX}${roomId}`;
     }
