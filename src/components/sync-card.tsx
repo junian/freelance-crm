@@ -5,6 +5,8 @@ import { Card } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useT } from "@/lib/i18n";
+import { useAppData } from "@/lib/app-data";
+import { toast as sonner } from "sonner";
 import { startSync, stopSync, makeRoomId, type SyncState } from "@/lib/webrtc-sync";
 
 const HASH_PREFIX = "#sync-";
