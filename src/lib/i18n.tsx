@@ -142,6 +142,7 @@ const id: Dict = {
   "sync.done": "Sinkronisasi selesai",
   "sync.peers": "Peer terhubung",
   "sync.error": "Kesalahan sinkron",
+  "sync.demoRemoved": "Data demo dihapus sebelum sinkronisasi",
   "common.loading": "Memuat data lokal…",
   "common.cancel": "Batal",
   "common.save": "Simpan",
