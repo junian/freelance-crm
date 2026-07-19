@@ -12,6 +12,7 @@ const HASH_PREFIX = "#sync-";
 
 export function SyncCard() {
   const { t } = useT();
+  const { prefs, deleteDemoData } = useAppData();
   const [state, setState] = useState<SyncState>({ status: "idle", peers: 0, progress: 0 });
   const startedRef = useRef(false);
 
