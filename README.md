@@ -78,8 +78,8 @@ The exact package manager version is pinned in [package.json](package.json).
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/junian/freelancer-crm.git
-cd freelancer-crm
+git clone https://github.com/junian/freelance-crm.git
+cd freelance-crm
 pnpm install
 ```
 
@@ -178,6 +178,6 @@ This project is licensed under the [MIT license](LICENSE).
 
 Made with ☕ by [Junian.dev](https://www.junian.dev).
 
-[app]: https://junian.github.io/freelancer-crm/ "Open Freelance CRM"
-[privacy]: https://junian.github.io/freelancer-crm/privacy "Freelance CRM privacy policy"
+[app]: https://junian.github.io/freelance-crm/ "Open Freelance CRM"
+[privacy]: https://junian.github.io/freelance-crm/privacy "Freelance CRM privacy policy"
 [coffee]: https://www.junian.dev/coffee/ "Buy Junian.dev a Coffee"
