@@ -36,7 +36,7 @@ const invoice: Invoice = {
   clientId: client.id,
   clientSnapshot: {
     name: "Test Client",
-    contactLines: ["client@example.test"],
+    contactLines: [""],
     addressLines: [],
     taxId: "",
   },
