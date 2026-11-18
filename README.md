@@ -57,7 +57,7 @@ See the live [Privacy Policy][privacy] for the full explanation.
 | Editing            | ProseKit / ProseMirror, unified, remark, rehype                          |
 | Notifications      | Sonner                                                                   |
 | Build and delivery | Nitro; static GitHub Pages build; Cloudflare module preset               |
-| Tooling            | Node.js 26+, pnpm 12, ESLint, Prettier                                   |
+| Tooling            | Node.js 26+, pnpm 12, ESLint, Prettier, Vitest                           |
 
 ## Requirements
 
@@ -105,6 +105,8 @@ No environment variables are required for the core app. Public site metadata —
 | `pnpm build`       | Build the production app             |
 | `pnpm build:dev`   | Build in development mode            |
 | `pnpm build:pages` | Build the static GitHub Pages site   |
+| `pnpm test`        | Run the unit test suite once         |
+| `pnpm test:watch`  | Run unit tests in watch mode         |
 | `pnpm preview`     | Preview the production build locally |
 | `pnpm lint`        | Run ESLint                           |
 | `pnpm format`      | Format the repository with Prettier  |
