@@ -12,13 +12,13 @@ export const Route = createFileRoute("/privacy")({
       { property: "og:title", content: `Privacy Policy — ${SITE.name}` },
       { property: "og:description", content: `${SITE.name} stores CRM data locally in your browser. Read our plain-language privacy policy.` },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/privacy" },
+      { property: "og:url", content: `${SITE.url}/privacy` },
       { property: "og:image", content: `${SITE.url}${SITE.ogImage}` },
       { name: "twitter:title", content: `Privacy Policy — ${SITE.name}` },
       { name: "twitter:description", content: `${SITE.name} stores CRM data locally in your browser.` },
       { name: "twitter:image", content: `${SITE.url}${SITE.ogImage}` },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: `${SITE.url}/privacy` }],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({

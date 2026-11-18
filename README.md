@@ -56,7 +56,7 @@ See the live [Privacy Policy][privacy] for the full explanation.
 | Local data         | RxDB with the Dexie storage adapter over IndexedDB                       |
 | Editing            | ProseKit / ProseMirror, unified, remark, rehype                          |
 | Notifications      | Sonner                                                                   |
-| Build and delivery | Nitro, Cloudflare module preset                                          |
+| Build and delivery | Nitro; static GitHub Pages build; Cloudflare module preset               |
 | Tooling            | Node.js 26+, pnpm 12, ESLint, Prettier                                   |
 
 ## Requirements
@@ -95,18 +95,19 @@ The app starts with an empty database. Create your first client from the dashboa
 
 ## Configuration
 
-No environment variables are required for the core app. Public site metadata — name, canonical URL, social image, privacy contact — lives in [`src/lib/site-config.ts`](src/lib/site-config.ts). Update those values, and the root social image in [`src/routes/__root.tsx`](src/routes/__root.tsx), before deploying a public instance.
+No environment variables are required for the core app. Public site metadata — name, canonical URL, social image, privacy contact — lives in [`src/lib/site-config.ts`](src/lib/site-config.ts). Update those values before deploying a public instance. `SITE.url` should match the deployed origin and base path, without a trailing slash.
 
 ## Available scripts
 
-| Command          | What it does                         |
-| ---------------- | ------------------------------------ |
-| `pnpm dev`       | Start the Vite development server    |
-| `pnpm build`     | Build the production app             |
-| `pnpm build:dev` | Build in development mode            |
-| `pnpm preview`   | Preview the production build locally |
-| `pnpm lint`      | Run ESLint                           |
-| `pnpm format`    | Format the repository with Prettier  |
+| Command            | What it does                         |
+| ------------------ | ------------------------------------ |
+| `pnpm dev`         | Start the Vite development server    |
+| `pnpm build`       | Build the production app             |
+| `pnpm build:dev`   | Build in development mode            |
+| `pnpm build:pages` | Build the static GitHub Pages site   |
+| `pnpm preview`     | Preview the production build locally |
+| `pnpm lint`        | Run ESLint                           |
+| `pnpm format`      | Format the repository with Prettier  |
 
 ## Project structure
 
@@ -119,6 +120,7 @@ src/
 ├── server.ts         SSR error wrapper
 └── styles.css        Global styles and design tokens
 public/               Favicon, manifest, robots.txt, social image
+.github/workflows/    GitHub Pages deployment workflow
 ```
 
 Key modules:
@@ -142,7 +144,23 @@ Backups are the only copy of your data outside the browser. Export them regularl
 
 ## Deployment
 
-The default production build targets a **Cloudflare Worker with static assets** through Nitro:
+### GitHub Pages
+
+The repository includes [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml). It builds the app as a static site, prerenders the public pages, adds a `404.html` client-side fallback, and publishes `.output/public` to GitHub Pages.
+
+To enable it:
+
+1. Go to **Settings → Pages** in the GitHub repository.
+2. Set **Source** to **GitHub Actions**.
+3. Push to `main`, or run the workflow manually from the **Actions** tab.
+
+The workflow derives the base path from the repository name, so a project page is served from `https://<user>.github.io/<repo>/`. If you use a custom domain or a `<user>.github.io` repository, change `BASE_PATH` to `/` in the workflow.
+
+The public site URL is configured in [`src/lib/site-config.ts`](src/lib/site-config.ts). Update it if you deploy under a different domain.
+
+### Other targets
+
+The default production build still targets a **Cloudflare Worker with static assets** through Nitro:
 
 ```bash
 pnpm build
@@ -160,6 +178,6 @@ This project is licensed under the [MIT license](LICENSE).
 
 Made with ☕ by [Junian.dev](https://www.junian.dev).
 
-[app]: https://crm-for-freelancer.lovable.app "Open Freelance CRM"
-[privacy]: https://crm-for-freelancer.lovable.app/privacy "Freelance CRM privacy policy"
+[app]: https://junian.github.io/freelancer-crm/ "Open Freelance CRM"
+[privacy]: https://junian.github.io/freelancer-crm/privacy "Freelance CRM privacy policy"
 [coffee]: https://www.junian.dev/coffee/ "Buy Junian.dev a Coffee"

@@ -8,4 +8,3 @@ Disallow: /interviews
 Disallow: /invoices
 Disallow: /settings
 
-Sitemap: /sitemap.xml

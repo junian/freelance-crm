@@ -80,13 +80,13 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: `About — ${SITE.name}` },
       { property: "og:description", content: SITE.description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: `${SITE.url}/about` },
       { property: "og:image", content: `${SITE.url}${SITE.ogImage}` },
       { name: "twitter:title", content: `About — ${SITE.name}` },
       { name: "twitter:description", content: SITE.description },
       { name: "twitter:image", content: `${SITE.url}${SITE.ogImage}` },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: `${SITE.url}/about` }],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({

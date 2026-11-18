@@ -7,14 +7,15 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppDataProvider } from "../lib/app-data";
 import { I18nProvider } from "../lib/i18n";
 import { SITE } from "../lib/site-config";
+
+const BASE_URL = import.meta.env.BASE_URL;
 
 function NotFoundComponent() {
   return (
@@ -41,9 +42,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -95,14 +93,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Freelance Hub is an offline-first web CRM for freelancers to manage clients, proposals, interviews, and invoices." },
       { property: "og:description", content: "Freelance Hub is an offline-first web CRM for freelancers to manage clients, proposals, interviews, and invoices." },
       { name: "twitter:description", content: "Freelance Hub is an offline-first web CRM for freelancers to manage clients, proposals, interviews, and invoices." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/55dc5a13-bab0-47ed-bb9b-331959aaa73f/id-preview-917f92e2--b782d3f9-a8a5-4427-88a2-f412a2fbed68.lovable.app-1784245151477.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/55dc5a13-bab0-47ed-bb9b-331959aaa73f/id-preview-917f92e2--b782d3f9-a8a5-4427-88a2-f412a2fbed68.lovable.app-1784245151477.png" },
+      { property: "og:image", content: `${SITE.url}${SITE.ogImage}` },
+      { name: "twitter:image", content: `${SITE.url}${SITE.ogImage}` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-      { rel: "manifest", href: "/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/favicon.ico" },
+      { rel: "icon", href: `${BASE_URL}favicon.ico`, type: "image/x-icon" },
+      { rel: "manifest", href: `${BASE_URL}manifest.webmanifest` },
+      { rel: "apple-touch-icon", href: `${BASE_URL}favicon.ico` },
     ],
   }),
   shellComponent: RootShell,

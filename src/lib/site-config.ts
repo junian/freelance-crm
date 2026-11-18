@@ -4,7 +4,7 @@ export const SITE = {
   shortName: "FreelanceCRM",
   description:
     "Offline-first CRM for freelancers to organize clients, proposals, interviews, and invoices — data stays in your browser.",
-  url: "https://freelance-crm.example.com",
+  url: "https://junian.github.io/freelancer-crm",
   ogImage: "/og-image.jpg",
   owner: "Freelance CRM",
   privacyEmail: "privacy@example.com",
