@@ -69,7 +69,6 @@ const DEPENDENCIES = [
   { name: "tw-animate-css", license: "MIT" },
   { name: "unified", license: "MIT" },
   { name: "vaul", license: "MIT" },
-  { name: "vite-tsconfig-paths", license: "MIT" },
   { name: "zod", license: "MIT" },
 ];
 
