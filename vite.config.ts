@@ -16,9 +16,9 @@ function normalizeBase(value: string): string {
 export default defineConfig(({ command, mode, isPreview }) => {
   // Keep `vite build --mode development` in development mode.
   const isDevBuild = command === "build" && mode === "development";
-  // GitHub Pages can only serve static files. Build an SPA shell instead of an
-  // SSR/Nitro bundle and prefix assets for project pages (/<repo>/).
-  const isGitHubPages = mode === "github-pages";
+  // Static hosting can only serve files. Build a prerendered static site instead
+  // of an SSR/Nitro bundle and prefix assets for project pages (/<repo>/).
+  const isStaticSiteMode = mode === "static-site";
   const useNitro = command === "build" || isPreview;
   const basePath = normalizeBase(process.env.BASE_PATH ?? "/");
 
@@ -53,7 +53,7 @@ export default defineConfig(({ command, mode, isPreview }) => {
         // Redirect TanStack Start's bundled server entry to src/server.ts
         // (our SSR error wrapper). Nitro builds from this.
         server: { entry: "server" },
-        ...(isGitHubPages
+        ...(isStaticSiteMode
           ? {
               prerender: {
                 enabled: true,
@@ -73,7 +73,7 @@ export default defineConfig(({ command, mode, isPreview }) => {
       ...(useNitro
         ? [
             nitro(
-              isGitHubPages ? { preset: "node-server" } : { defaultPreset: "cloudflare-module" },
+              isStaticSiteMode ? { preset: "node-server" } : { defaultPreset: "cloudflare-module" },
             ),
           ]
         : []),
