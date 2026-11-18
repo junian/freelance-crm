@@ -9,7 +9,6 @@ import type {
   Proposal,
   ProposalFinalState,
 } from "./types";
-import { seedDemoIfNeeded } from "./seed";
 import { isoNow } from "./format";
 
 type Ctx = {
@@ -48,7 +47,6 @@ type Ctx = {
 
   setPrefs: (p: Preferences) => Promise<void>;
   refresh: () => Promise<void>;
-  deleteDemoData: () => Promise<void>;
 };
 
 const AppDataContext = createContext<Ctx | null>(null);
@@ -78,11 +76,6 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     (async () => {
-      try {
-        await seedDemoIfNeeded();
-      } catch (e) {
-        console.error("Seed failed", e);
-      }
       await refresh();
       setReady(true);
     })();
@@ -275,17 +268,6 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
     setPrefsState(p);
   };
 
-  const deleteDemoData: Ctx["deleteDemoData"] = async () => {
-    await Promise.all([
-      stores.clients.clear(),
-      stores.proposals.clear(),
-      stores.interviews.clear(),
-      stores.invoices.clear(),
-    ]);
-    await savePreferences({ ...prefs, seededDemo: true, hasDemoData: false });
-    await refresh();
-  };
-
   const value: Ctx = useMemo(
     () => ({
       ready,
@@ -314,7 +296,6 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
       nextInvoiceNumber,
       setPrefs,
       refresh,
-      deleteDemoData,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [ready, clients, proposals, interviews, invoices, prefs],

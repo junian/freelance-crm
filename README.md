@@ -182,7 +182,7 @@ Persist changes immediately after create, update, or delete operations.
 
 Keep React state synchronized after every repository mutation. Never require a hard refresh to show updated data.
 
-Seed realistic demo data only on the first launch. Include a visible "Delete demo data" action. Never recreate demo data after the user has removed it unless the user explicitly requests it.
+Start with an empty database. Never auto-seed demo data.
 
 ## Data models
 
@@ -880,7 +880,6 @@ Create a Settings page with:
 * JSON backup import.
 * Proposal CSV export.
 * Invoice CSV export.
-* Delete demo data.
 * Reset all data.
 * Analytics/privacy information.
 

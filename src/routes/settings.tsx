@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/select";
 import { useAppData } from "@/lib/app-data";
 import { LANGUAGES, useT } from "@/lib/i18n";
-import { seedDemoIfNeeded } from "@/lib/seed";
 import {
   downloadCsv,
   downloadJson,
@@ -51,8 +50,7 @@ export const Route = createFileRoute("/settings")({
 });
 
 function SettingsPage() {
-  const { prefs, setPrefs, clients, proposals, interviews, invoices, refresh, deleteDemoData } =
-    useAppData();
+  const { prefs, setPrefs, clients, proposals, interviews, invoices, refresh } = useAppData();
   const { t } = useT();
   const [importMode, setImportMode] = useState<"replace" | "merge">("merge");
   const [pending, setPending] = useState<null | { data: ReturnType<typeof validateBackup> }>(null);
@@ -242,9 +240,6 @@ function SettingsPage() {
         <Card className="p-5 border-rose-200 dark:border-rose-900/50">
           <div className="font-semibold mb-3 text-rose-700 dark:text-rose-400">Danger zone</div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" onClick={async () => { await deleteDemoData(); toast.success("Demo data removed"); }}>
-              Delete demo data
-            </Button>
             <Button variant="destructive" onClick={() => setConfirmReset(true)}>
               Reset all data
             </Button>
@@ -311,7 +306,6 @@ function SettingsPage() {
               className="bg-rose-600 hover:bg-rose-700"
               onClick={async () => {
                 await resetAll();
-                await seedDemoIfNeeded();
                 await refresh();
                 toast.success("All data deleted");
                 setConfirmReset(false);

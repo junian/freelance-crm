@@ -93,8 +93,6 @@ export type Preferences = {
   language: "en" | "id";
   defaultIssuer: InvoicePartySnapshot;
   defaultCurrency: string;
-  seededDemo: boolean;
-  hasDemoData: boolean;
 };
 
 export const CURRENCIES = ["USD", "EUR", "GBP", "CAD", "AUD", "INR", "JPY", "PLN", "BRL", "MXN"];
