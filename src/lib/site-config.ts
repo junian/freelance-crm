@@ -7,6 +7,5 @@ export const SITE = {
   url: "https://junian.github.io/freelancer-crm",
   ogImage: "/og-image.jpg",
   owner: "Freelance CRM",
-  privacyEmail: "privacy@example.com",
   themeColor: "#4f46e5",
 };

@@ -136,22 +136,6 @@ function PrivacyPage() {
               analytics.
             </p>
           </section>
-
-          <section className="space-y-3">
-            <h2 className="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
-              Contact
-            </h2>
-            <p>
-              Questions about privacy? Contact{" "}
-              <a
-                href={`mailto:${SITE.privacyEmail}`}
-                className="text-indigo-600 hover:underline dark:text-indigo-400"
-              >
-                {SITE.privacyEmail}
-              </a>
-              .
-            </p>
-          </section>
         </article>
       </Card>
     </AppShell>
